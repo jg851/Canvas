@@ -14,7 +14,6 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
-import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.graphics.drawscope.translate
 import androidx.compose.ui.res.imageResource
@@ -41,14 +40,6 @@ class MainActivity : ComponentActivity() {
 fun TestCanvas(modifier: Modifier = Modifier) {
     // 載入圖片資源 (小小兵)
     val minionsImage: ImageBitmap = ImageBitmap.imageResource(id = R.drawable.minions)
-
-    // 建立一個新的路徑物件
-    val path = Path().apply {
-        moveTo(50f, 100f)   // 移動到起始點 (50f, 100f)
-        lineTo(200f, 500f)  // 畫一條線到 (200f, 500f)
-        lineTo(450f, 400f)  // 畫一條線到 (450f, 400f)
-        close()             // 閉合路徑
-    }
 
     Canvas(
         modifier = modifier.fillMaxSize()
@@ -77,22 +68,14 @@ fun TestCanvas(modifier: Modifier = Modifier) {
         )
 
         // 4. 計算小小兵圖片置中位置並繪製
-        val minionsWidth = minionsImage.width
-        val minionsHeight = minionsImage.height
+        val minionsWidth = minionsImage.width.toFloat()
+        val minionsHeight = minionsImage.height.toFloat()
         val offsetX = (size.width - minionsWidth) / 2f
         val offsetY = (size.height - minionsHeight) / 2f
 
         translate(offsetX, offsetY) {
             drawImage(minionsImage)
         }
-
-        // 5. 繪製綠色路徑，透明度 1 (不透明)，線條粗細 10
-        drawPath(
-            path = path,
-            color = Color.Green,
-            alpha = 1f,
-            style = Stroke(width = 10f)
-        )
     }
 }
 
